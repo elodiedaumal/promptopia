@@ -1,3 +1,5 @@
+import Navbar from "@components/Navbar";
+import Provider from "@components/Provider";
 import "@styles/global.css";
 
 export const metadata = {
@@ -9,10 +11,14 @@ const RootLayout = ({ children }) => {
   return (
     <html len="en">
       <body>
-        <div className="name">
+        <div className="main">
           <div className="gradient"></div>
         </div>
-        <main className="app">{children}</main>
+
+        <main className="app">
+          <Navbar />
+          {children}
+        </main>
       </body>
     </html>
   );
