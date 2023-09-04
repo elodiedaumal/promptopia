@@ -6,14 +6,10 @@ import { useEffect, useState } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Navbar = () => {
-  const [session, setSession] = useState(true);
-  const [toggleDropdown, setToggleDropdown] = useState(false);
-
-  const signOut = () => {
-    setSession(false);
-  };
+  const { data: session } = useSession();
 
   const [providers, setProviders] = useState(null);
+  const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -23,29 +19,33 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="flex-between w-full pt-3 mb-16">
+    <nav className="flex-between w-full mb-16 pt-3">
       <Link href="/" className="flex gap-2 flex-center">
         <Image
-          src="./assets/images/logo.svg"
+          src="/assets/images/logo.svg"
+          alt="logo"
           width={30}
           height={30}
           className="object-contain"
-          alt="Prompotopia"
         />
         <p className="logo_text">Promptopia</p>
       </Link>
+
+      {/* Desktop Navigation */}
       <div className="sm:flex hidden">
-        {session ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompt" className="black_btn">
               Create Post
             </Link>
+
             <button type="button" onClick={signOut} className="outline_btn">
               Sign Out
             </button>
+
             <Link href="/profile">
               <Image
-                src="/assets/images/logo.svg"
+                src={session?.user.image}
                 width={37}
                 height={37}
                 className="rounded-full"
@@ -72,11 +72,12 @@ const Navbar = () => {
         )}
       </div>
 
+      {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
-        {session ? (
+        {session?.user ? (
           <div className="flex">
             <Image
-              src="/assets/images/logo.svg"
+              src={session?.user.image}
               width={37}
               height={37}
               className="rounded-full"
