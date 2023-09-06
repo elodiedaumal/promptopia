@@ -1,6 +1,6 @@
-import Navbar from "@components/Navbar";
-import Provider from "@components/Provider";
-import "@styles/global.css";
+import Navbar from "../components/Navbar";
+import Provider from "../components/Provider";
+import "../styles/global.css";
 
 export const metadata = {
   title: "Promptopia",
